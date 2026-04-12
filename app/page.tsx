@@ -1,65 +1,144 @@
-import Image from "next/image";
+"use client";
+
+export const dynamic = "force-dynamic";
+
+import { useEffect, useMemo, useState } from "react";
+import { observer } from "mobx-react-lite";
+import { useTranslations } from "next-intl";
+import { getMarketStore } from "@/stores/market/marketStore";
+import { getSettingsStore } from "@/stores/settings/settingsStore";
+import {
+  initMarketData,
+  startMarketStream,
+  stopMarketStream,
+} from "@/stores/market/marketOrchestrators";
+import { MarketTable } from "@/components/market/MarketCard";
+import { Navbar } from "@/components/layout/Navbar";
+import { MarketTableSkeleton } from "@/components/ui/SkeletonLoader";
+import { ToastContainer } from "@/components/ui/Toast";
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
+
+const POPULAR_SYMBOLS = [
+  "BTCUSDT", "ETHUSDT", "BNBUSDT", "XRPUSDT", "ADAUSDT",
+  "SOLUSDT", "DOGEUSDT", "DOTUSDT", "LTCUSDT", "LINKUSDT",
+];
+
+const DashboardPage = observer(function DashboardPage() {
+  const t = useTranslations("dashboard");
+  const store = getMarketStore();
+  const settings = getSettingsStore();
+  const [filter, setFilter] = useState<"all" | "favorites">("all");
+
+  useEffect(() => {
+    initMarketData();
+    startMarketStream();
+    return () => {
+      stopMarketStream();
+    };
+  }, []);
+
+  const allSymbols: string[] = useMemo(() => {
+    const pairSymbols = store.pairs.map((p) => p.symbol);
+    // put popular ones first
+    const popular = POPULAR_SYMBOLS.filter((s) => pairSymbols.includes(s));
+    const rest = pairSymbols.filter((s) => !POPULAR_SYMBOLS.includes(s));
+    return [...popular, ...rest];
+  }, [store.pairs]);
+
+  const displaySymbols = useMemo(() => {
+    const symbols = filter === "favorites" ? settings.favorites : allSymbols;
+    // pinned favorites on top when viewing all
+    if (filter === "all") {
+      const favSet = new Set(settings.favorites);
+      const pinned = allSymbols.filter((s) => favSet.has(s));
+      const rest = allSymbols.filter((s) => !favSet.has(s));
+      return [...pinned, ...rest];
+    }
+    return symbols;
+  }, [filter, allSymbols, settings.favorites]);
+
+  const isLoading = store.isLoadingPairs || store.isLoadingTickers;
+
+  return (
+    <div className="min-h-screen bg-[var(--background)]">
+      <Navbar />
+
+      <main className="max-w-screen-xl mx-auto px-4 py-6">
+        {/* Header */}
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-[var(--foreground)]">{t("title")}</h1>
+          <p className="text-[var(--muted-foreground)] text-sm mt-1">
+            Real-time prices from Binance
+          </p>
+        </div>
+
+        {/* Filter tabs */}
+        <div className="flex items-center gap-2 mb-4">
+          <button
+            onClick={() => setFilter("all")}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              filter === "all"
+                ? "bg-[var(--accent)] text-white"
+                : "bg-[var(--card)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] border border-[var(--card-border)]"
+            }`}
+          >
+            All Markets
+          </button>
+          <button
+            onClick={() => setFilter("favorites")}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
+              filter === "favorites"
+                ? "bg-[var(--accent)] text-white"
+                : "bg-[var(--card)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] border border-[var(--card-border)]"
+            }`}
+          >
+            <span>★</span>
+            <span>Watchlist</span>
+            {settings.favorites.length > 0 && (
+              <span className="ml-1 bg-white/20 px-1.5 py-0.5 rounded-full text-xs">
+                {settings.favorites.length}
+              </span>
+            )}
+          </button>
+        </div>
+
+        {/* Market table */}
+        <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl overflow-hidden">
+          {store.error ? (
+            <div className="p-8 text-center text-[var(--red)]">{t("error")}</div>
+          ) : isLoading ? (
+            <div className="p-4">
+              <MarketTableSkeleton />
+            </div>
+          ) : displaySymbols.length === 0 ? (
+            <div className="p-8 text-center text-[var(--muted-foreground)]">
+              {filter === "favorites" ? "No favorites yet. Star pairs to add them here." : t("noResults")}
+            </div>
+          ) : (
+            <MarketTable
+              symbols={displaySymbols}
+              favorites={settings.favorites}
+            />
+          )}
+        </div>
+
+        {/* Stats bar */}
+        {!isLoading && (
+          <p className="mt-3 text-xs text-[var(--muted-foreground)] text-right">
+            {store.tickers.size} trading pairs · Live via Binance WebSocket
+          </p>
+        )}
+      </main>
+
+      <ToastContainer />
+    </div>
+  );
+});
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <ErrorBoundary>
+      <DashboardPage />
+    </ErrorBoundary>
   );
 }
