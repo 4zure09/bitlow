@@ -2,6 +2,12 @@
 
 A real-time cryptocurrency market dashboard built with Next.js, MobX, and SatchelJS, powered by the public Binance API.
 
+## Infomation
+
+- **Name:** Phu Nguyen
+- **Email:** [jngkao@gmail.com](mailto:jngkao@gmail.com)
+- **LinkedIn:** [linkedin.com/in/jngkao](https://www.linkedin.com/in/jngkao/)
+
 ## Features
 
 - **Real-time Market Dashboard** — Live prices for all USDT trading pairs via WebSocket
@@ -21,17 +27,17 @@ A real-time cryptocurrency market dashboard built with Next.js, MobX, and Satche
 
 ## Tech Stack
 
-| Area | Choice |
-|---|---|
-| Framework | Next.js 16 (App Router) |
-| Language | TypeScript (strict) |
-| UI | React 19 |
-| Styling | Tailwind CSS v4 |
-| State Management | MobX + SatchelJS |
-| Real-time Data | Native WebSocket API |
-| Charts | Lightweight Charts (TradingView) |
-| i18n | next-intl |
-| Data Source | Binance Public API (no key required) |
+| Area             | Choice                               |
+| ---------------- | ------------------------------------ |
+| Framework        | Next.js 16 (App Router)              |
+| Language         | TypeScript (strict)                  |
+| UI               | React 19                             |
+| Styling          | Tailwind CSS v4                      |
+| State Management | MobX + SatchelJS                     |
+| Real-time Data   | Native WebSocket API                 |
+| Charts           | Lightweight Charts (TradingView)     |
+| i18n             | next-intl                            |
+| Data Source      | Binance Public API (no key required) |
 
 ## Getting Started
 
@@ -154,14 +160,14 @@ All user preferences (language, theme, favorites, avatar) are stored in `localSt
 
 ## Binance API Reference
 
-| Endpoint | Purpose |
-|---|---|
-| `GET /api/v3/exchangeInfo` | All trading pairs |
-| `GET /api/v3/ticker/24hr` | Initial price snapshot |
-| `GET /api/v3/klines?symbol=BTCUSDT&interval=15m` | Historical candlestick data |
-| `wss://.../!miniTicker@arr` | All market prices (real-time) |
-| `wss://.../<symbol>@kline_<interval>` | Live candlestick updates |
-| `wss://.../<symbol>@depth20@100ms` | Order book depth |
-| `wss://.../<symbol>@trade` | Recent individual trades |
+| Endpoint                                         | Purpose                       |
+| ------------------------------------------------ | ----------------------------- |
+| `GET /api/v3/exchangeInfo`                       | All trading pairs             |
+| `GET /api/v3/ticker/24hr`                        | Initial price snapshot        |
+| `GET /api/v3/klines?symbol=BTCUSDT&interval=15m` | Historical candlestick data   |
+| `wss://.../!miniTicker@arr`                      | All market prices (real-time) |
+| `wss://.../<symbol>@kline_<interval>`            | Live candlestick updates      |
+| `wss://.../<symbol>@depth20@100ms`               | Order book depth              |
+| `wss://.../<symbol>@trade`                       | Recent individual trades      |
 
 No API key is required for any of these endpoints.
