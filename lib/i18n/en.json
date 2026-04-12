@@ -1,0 +1,53 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Crypto Market",
+    "search": "Search trading pairs...",
+    "noResults": "No trading pairs found",
+    "loading": "Loading market data...",
+    "error": "Failed to load market data"
+  },
+  "table": {
+    "symbol": "Symbol",
+    "price": "Price",
+    "change24h": "24h Change",
+    "volume": "Volume",
+    "high": "24h High",
+    "low": "24h Low",
+    "favorite": "Favorite"
+  },
+  "detail": {
+    "back": "Back",
+    "chart": "Price Chart",
+    "orderBook": "Order Book",
+    "recentTrades": "Recent Trades",
+    "bids": "Bids",
+    "asks": "Asks",
+    "price": "Price",
+    "amount": "Amount",
+    "total": "Total",
+    "time": "Time",
+    "side": "Side",
+    "buy": "Buy",
+    "sell": "Sell",
+    "interval": "Interval"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "dark": "Dark",
+    "light": "Light",
+    "avatar": "Profile Avatar",
+    "uploadAvatar": "Upload Avatar",
+    "favorites": "Watchlist",
+    "noFavorites": "No favorites yet. Star pairs on the dashboard."
+  },
+  "errors": {
+    "loadFailed": "Failed to load data. Please try again.",
+    "wsFailed": "Real-time connection lost. Reconnecting..."
+  }
+}

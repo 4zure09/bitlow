@@ -1,26 +1,86 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0f1117;
+  --foreground: #e2e8f0;
+  --card: #1a1f2e;
+  --card-border: #2d3748;
+  --muted: #4a5568;
+  --muted-foreground: #a0aec0;
+  --accent: #3182ce;
+  --accent-hover: #4299e1;
+  --green: #48bb78;
+  --red: #fc8181;
+  --green-bg: rgba(72, 187, 120, 0.15);
+  --red-bg: rgba(252, 129, 129, 0.15);
+}
+
+html.light {
+  --background: #f7fafc;
+  --foreground: #1a202c;
+  --card: #ffffff;
+  --card-border: #e2e8f0;
+  --muted: #718096;
+  --muted-foreground: #4a5568;
+  --accent: #3182ce;
+  --accent-hover: #2b6cb0;
+  --green: #276749;
+  --red: #c53030;
+  --green-bg: rgba(39, 103, 73, 0.1);
+  --red-bg: rgba(197, 48, 48, 0.1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-border: var(--card-border);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-green: var(--green);
+  --color-red: var(--red);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Price flash animations */
+@keyframes flash-green {
+  0% { background-color: var(--green-bg); }
+  100% { background-color: transparent; }
+}
+
+@keyframes flash-red {
+  0% { background-color: var(--red-bg); }
+  100% { background-color: transparent; }
+}
+
+.flash-up {
+  animation: flash-green 0.8s ease-out;
+}
+
+.flash-down {
+  animation: flash-red 0.8s ease-out;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--card);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
 }

@@ -1,0 +1,53 @@
+{
+  "nav": {
+    "dashboard": "Tổng quan",
+    "settings": "Cài đặt"
+  },
+  "dashboard": {
+    "title": "Thị trường Crypto",
+    "search": "Tìm kiếm cặp giao dịch...",
+    "noResults": "Không tìm thấy cặp giao dịch",
+    "loading": "Đang tải dữ liệu thị trường...",
+    "error": "Không thể tải dữ liệu thị trường"
+  },
+  "table": {
+    "symbol": "Cặp tiền",
+    "price": "Giá",
+    "change24h": "Thay đổi 24h",
+    "volume": "Khối lượng",
+    "high": "Cao nhất 24h",
+    "low": "Thấp nhất 24h",
+    "favorite": "Yêu thích"
+  },
+  "detail": {
+    "back": "Quay lại",
+    "chart": "Biểu đồ giá",
+    "orderBook": "Sổ lệnh",
+    "recentTrades": "Giao dịch gần đây",
+    "bids": "Mua",
+    "asks": "Bán",
+    "price": "Giá",
+    "amount": "Số lượng",
+    "total": "Tổng",
+    "time": "Thời gian",
+    "side": "Chiều",
+    "buy": "Mua",
+    "sell": "Bán",
+    "interval": "Khung thời gian"
+  },
+  "settings": {
+    "title": "Cài đặt",
+    "language": "Ngôn ngữ",
+    "theme": "Giao diện",
+    "dark": "Tối",
+    "light": "Sáng",
+    "avatar": "Ảnh đại diện",
+    "uploadAvatar": "Tải ảnh lên",
+    "favorites": "Danh sách yêu thích",
+    "noFavorites": "Chưa có yêu thích. Hãy đánh dấu sao các cặp tiền trên trang chính."
+  },
+  "errors": {
+    "loadFailed": "Không thể tải dữ liệu. Vui lòng thử lại.",
+    "wsFailed": "Mất kết nối thời gian thực. Đang kết nối lại..."
+  }
+}
