@@ -4,7 +4,7 @@ A real-time cryptocurrency market dashboard built with Next.js, MobX, and Satche
 
 ## Infomation
 
-- **Name:** Phu Nguyen
+- **Name:** Thanh Phu Nguyen
 - **Email:** [jngkao@gmail.com](mailto:jngkao@gmail.com)
 - **LinkedIn:** [linkedin.com/in/jngkao](https://www.linkedin.com/in/jngkao/)
 
