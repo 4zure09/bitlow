@@ -2,12 +2,6 @@
 
 A real-time cryptocurrency market dashboard built with Next.js, MobX, and SatchelJS, powered by the public Binance API.
 
-## Infomation
-
-- **Name:** Thanh Phu Nguyen
-- **Email:** [jngkao@gmail.com](mailto:jngkao@gmail.com)
-- **LinkedIn:** [linkedin.com/in/jngkao](https://www.linkedin.com/in/jngkao/)
-
 ## Features
 
 - **Real-time Market Dashboard** — Live prices for all USDT trading pairs via WebSocket
